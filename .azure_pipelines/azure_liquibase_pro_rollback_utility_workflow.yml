@@ -63,7 +63,7 @@ stages:
                  --flow-file=$(FLOW_FILE) \
                  --logfile=logs/liquibase.log
 
-            displayName: Use DEV Keys
+            displayName: Roll back in DEV
             condition: eq( variables['Build.SourceBranchName'], 'develop')
             env:
               LIQUIBASE_LICENSE_KEY: $(Liquibase-Pro-Key)
@@ -78,7 +78,7 @@ stages:
               liquibase flow \
                  --flow-file=$(FLOW_FILE) \
                  --logfile=logs/liquibase.log
-            displayName: Use QA Keys
+            displayName: Roll back in QA
             condition: eq( variables['Build.SourceBranchName'], 'qa')
             env:
               LIQUIBASE_LICENSE_KEY: $(Liquibase-Pro-Key)
@@ -93,7 +93,7 @@ stages:
               liquibase flow \
                  --flow-file=$(FLOW_FILE) \
                  --logfile=logs/liquibase.log
-            displayName: Use PROD Keys
+            displayName: Roll back in PROD
             condition: eq( variables['Build.SourceBranchName'], 'prod')
             env:
               LIQUIBASE_LICENSE_KEY: $(Liquibase-Pro-Key)

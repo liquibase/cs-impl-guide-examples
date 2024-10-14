@@ -7,9 +7,6 @@ pr: none
 
 name: Continuous Integration of $(Build.SourceBranchName)
 
-# Use the Liquibase_Variables variable group to get credentials from Azure key vault
-# https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml#use-a-variable-group
-
 #####################################################################
 #  Load variables from the template alongside secrets and variables
 #  linked from Azure Key Vault.
