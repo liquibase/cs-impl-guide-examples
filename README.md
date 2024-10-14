@@ -1,2 +1,2 @@
-# Automations
-Liquibase Automation Examples
+# Liquibase Pro Implementation Guide
+
