@@ -79,7 +79,7 @@ stages:
           - bash: |
               echo "##vso[task.setvariable variable=FLOW_FILE;]flowfiles/liquibase-premerge.flowfile.yaml"
 
-          # Run Liquibase using LIQUIBASE_COMMAND_URL, LIQUIBASE_COMMAND_USERNAME, and LIQUIBASE_COMMAND_PASSWORD for
+          # Run Liquibase using LIQUIBASE_COMMAND_URL, LIQUIBASE_COMMAND_USERNAME, and LIQUIBASE_COMMAND_PASSWORD in
           # the environment. Note the "-dev", "-qa", and "-prod" suffixes for those values in the 'env' section.
           - script: |
               pwd
