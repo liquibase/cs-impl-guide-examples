@@ -83,6 +83,7 @@ stages:
           # the environment. Note the "-dev", "-qa", and "-prod" suffixes for those values in the 'env' section.
           - script: |
               pwd
+              du -ah
               liquibase flow \
                  --flow-file=$(FLOW_FILE) \
                  --logfile=logs/liquibase.log
