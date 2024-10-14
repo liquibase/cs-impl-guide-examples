@@ -54,7 +54,7 @@ stages:
                 echo $var ${!var};
               done
 
-          - checkout: SRC_REPOSITORY
+          - checkout: self
             persistCredentials: true
             clean: true
 

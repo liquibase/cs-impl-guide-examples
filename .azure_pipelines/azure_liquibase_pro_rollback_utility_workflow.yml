@@ -45,7 +45,7 @@ stages:
         dependsOn: cleanWorkspace
         displayName: Rollback One Update
         steps:
-          - checkout: SRC_REPOSITORY
+          - checkout: self
             persistCredentials: true
             clean: true
 
