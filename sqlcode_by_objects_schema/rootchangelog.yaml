@@ -3,6 +3,7 @@ databaseChangeLog:
 - include:
     file: schema1/schema1changelog.yaml
     relativeToChangelogFile: true
+    
 #- include:
 #    file: schema2/schema2changelog.yaml
 #    relativeToChangelogFile: true
