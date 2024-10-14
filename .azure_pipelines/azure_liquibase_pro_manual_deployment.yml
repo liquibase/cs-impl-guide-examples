@@ -55,9 +55,10 @@ stages:
         dependsOn: cleanWorkspace
         displayName: Database Deployment
         steps:
-          - checkout: SRC_REPOSITORY
+          - checkout: self
             persistCredentials: true
             clean: true
+            path: Automation-Examples
 
           - checkout: TOOLS_REPOSITORY
             persistCredentials: true

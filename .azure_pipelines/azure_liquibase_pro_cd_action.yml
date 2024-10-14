@@ -54,9 +54,10 @@ stages:
                 echo $var ${!var};
               done
 
-          - checkout: SRC_REPOSITORY
+          - checkout: self
             persistCredentials: true
             clean: true
+            path: Automation-Examples
 
           - checkout: TOOLS_REPOSITORY
             persistCredentials: true
