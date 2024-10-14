@@ -61,7 +61,7 @@ stages:
               done
             displayName: Show all variables
 
-          # Check out the code to the runner workspace directory to the Automation-Examples directory
+          # Check out the code to the runner workspace directory to the cs-impl-guide-examples directory
           - checkout: self
             persistCredentials: true
             clean: true
@@ -95,8 +95,8 @@ stages:
               LIQUIBASE_COMMAND_URL: $(Liquibase-command-url-dev)
               LIQUIBASE_COMMAND_USERNAME: $(liquibase-command-username-dev)
               LIQUIBASE_COMMAND_PASSWORD: $(liquibase-command-password-dev)
-              LIQUIBASE_DEFAULTS_FILE: ./Automation-Examples/liquibase.properties
-              LIQUIBASE_SEARCH_PATH: "Automation-Examples,Automations,."
+              LIQUIBASE_DEFAULTS_FILE: ./cs-impl-guide-examples/liquibase.properties
+              LIQUIBASE_SEARCH_PATH: "cs-impl-guide-examples,Automations,."
 
           - script: |
               pwd
@@ -112,8 +112,8 @@ stages:
               LIQUIBASE_COMMAND_URL: $(liquibase-command-url-qa)
               LIQUIBASE_COMMAND_USERNAME: $(liquibase-command-username-qa)
               LIQUIBASE_COMMAND_PASSWORD: $(liquibase-command-password-qa)
-              LIQUIBASE_DEFAULTS_FILE: ./Automation-Examples/liquibase.properties
-              LIQUIBASE_SEARCH_PATH: "Automation-Examples,Automations,."
+              LIQUIBASE_DEFAULTS_FILE: ./cs-impl-guide-examples/liquibase.properties
+              LIQUIBASE_SEARCH_PATH: "cs-impl-guide-examples,Automations,."
 
           - script: |
               pwd
@@ -129,6 +129,6 @@ stages:
               LIQUIBASE_COMMAND_URL: $(liquibase-command-url-prod)
               LIQUIBASE_COMMAND_USERNAME: $(liquibase-command-username-prod)
               LIQUIBASE_COMMAND_PASSWORD: $(liquibase-command-password-prod)
-              LIQUIBASE_DEFAULTS_FILE: ./Automation-Examples/liquibase.properties
-              LIQUIBASE_SEARCH_PATH: "Automation-Examples,Automations,."
+              LIQUIBASE_DEFAULTS_FILE: ./cs-impl-guide-examples/liquibase.properties
+              LIQUIBASE_SEARCH_PATH: "cs-impl-guide-examples,Automations,."
 
