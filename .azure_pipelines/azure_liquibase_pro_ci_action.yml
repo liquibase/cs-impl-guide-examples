@@ -65,7 +65,6 @@ stages:
           - checkout: self
             persistCredentials: true
             clean: true
-            path: Automation-Examples
             displayName: Check out self
 
           # Check out the tools repository with flow files and Custom Checks configs
