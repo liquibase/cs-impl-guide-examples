@@ -27,7 +27,6 @@ pool:
 #####################################################################
 # The repositories needed to run, build, and deploy.
 #####################################################################
-
 resources:
   repositories:
 
@@ -39,6 +38,10 @@ resources:
       source: adeelmalik78/Automations
       ref: 'refs/heads/main'
 
+###################################################################
+# Stage are logical boundaries in an Azure DevOps pipeline. We only
+# need one.
+###################################################################
 stages:
   - stage: CI
     jobs:
