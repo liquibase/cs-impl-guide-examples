@@ -69,7 +69,7 @@ stages:
           - checkout: self
             persistCredentials: true
             clean: true
-            path: cs-impl-guide-examples
+#            path: cs-impl-guide-examples
 
           # Check out the tools repository with flow files and Custom Checks configs
           - checkout: TOOLS_REPOSITORY
