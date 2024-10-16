@@ -61,7 +61,7 @@ stages:
               done
             displayName: Show all variables
 
-          # Check out the code to the runner workspace directory to the cs-impl-guide-examples directory
+          # Check out the code
           - checkout: self
             persistCredentials: true
             clean: true
