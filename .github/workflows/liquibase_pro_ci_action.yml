@@ -118,11 +118,18 @@ jobs:
         uses: actions/checkout@v3
 
       # Check out the Liquibase Configuration Repo to a folder, "liquibase-process"
-      - name: Checkout Liquibase Configuration repo
+      - name: Checkout Liquibase SQL repo
         uses: actions/checkout@v4
         with:
-          repository: adeelmalik78/Automations
-          path: liquibase-process
+          repository: liquibase/cs-impl-guide-examples-sql
+          path: liquibase-sql
+
+      # Check out the Liquibase Configuration Repo to a folder, "liquibase-process"
+#      - name: Checkout Liquibase Configuration repo
+#        uses: actions/checkout@v4
+#        with:
+#          repository: adeelmalik78/Automations
+#          path: liquibase-process
 
 
   ####################################################################
