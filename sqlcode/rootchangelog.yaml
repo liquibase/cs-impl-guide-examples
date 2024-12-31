@@ -6,6 +6,7 @@ databaseChangeLog:
     relativeToChangelogFile: true
 
 
+
 ## schema2 = public
 #- include:
 #    file: schema2/schema2changelog.yaml
