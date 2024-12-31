@@ -124,7 +124,7 @@ jobs:
           repository: liquibase/cs-impl-guide-examples-sql
           path: liquibase-sql
 
-      # Check out the Liquibase Configuration Repo to a folder, "liquibase-process"
+#      # Check out the Liquibase Configuration Repo to a folder, "liquibase-process"
 #      - name: Checkout Liquibase Configuration repo
 #        uses: actions/checkout@v4
 #        with:
