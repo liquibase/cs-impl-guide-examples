@@ -32,7 +32,7 @@ env:
   # The Liquibase Search Path controls how Liquibase finds it's configurations.
   # To ensure the correct config gets located first, keep "." at the end of this path.
   # See https://docs.liquibase.com/concepts/changelogs/how-liquibase-finds-files.html
-  LIQUIBASE_SEARCH_PATH: "liquibase-process,."
+  LIQUIBASE_SEARCH_PATH: "."
 
   # Location of the Custom Policy Checks settings file from the Liquibase Configuration Repo.
   # See https://docs.liquibase.com/liquibase-pro/policy-checks/custom-policy-checks/home.html
@@ -113,23 +113,17 @@ jobs:
     runs-on: [self-hosted]
 
     steps:
-      # Check out the source code
-      - name: Checkout Database Source repo
+      # Check out the database change configuration code and workflows
+      - name: Checkout Database Change Configuration repo
         uses: actions/checkout@v3
 
-      # Check out the Liquibase Configuration Repo to a folder, "liquibase-process"
-      - name: Checkout Liquibase SQL repo
+      # Check out the SQL Repo to a folder, "liquibase-sql"
+      - name: Checkout Database Change SQL repo
         uses: actions/checkout@v4
         with:
           repository: liquibase/cs-impl-guide-examples-sql
           path: liquibase-sql
 
-#      # Check out the Liquibase Configuration Repo to a folder, "liquibase-process"
-#      - name: Checkout Liquibase Configuration repo
-#        uses: actions/checkout@v4
-#        with:
-#          repository: adeelmalik78/Automations
-#          path: liquibase-process
 
 
   ####################################################################
