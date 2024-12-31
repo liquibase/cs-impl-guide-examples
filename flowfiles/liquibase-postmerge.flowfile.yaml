@@ -33,7 +33,7 @@ stages:
           checks-scope: database,
           checks-settings-file: "policychecks/liquibase.checks-settings.conf", 
           auto-update: "ON", 
-          changeset-filter: "pending" 
+          changeset-filter: "all"
         }
         globalArgs: { 
           reports-name: "checks-report-database.html" 
