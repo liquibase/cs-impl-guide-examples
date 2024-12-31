@@ -44,12 +44,12 @@ env:
   #  The top level Flow File that orchestrates the database changes
   #  We are using a flow which calls rollback-one-update-sql, and
   #  rollback-one-update: https://docs.liquibase.com/commands/rollback/rollback-one-update.html
-  FLOW_FILE: "liquibase-process/flowfiles/liquibase-rollback.flowfile.yaml"
+  FLOW_FILE: "flowfiles/liquibase-rollback.flowfile.yaml"
 
   # The Liquibase Search Path controls how Liquibase finds it's configurations.
   # To ensure the correct config gets located first, keep "." at the end of this path.
   # See https://docs.liquibase.com/concepts/changelogs/how-liquibase-finds-files.html
-  LIQUIBASE_SEARCH_PATH: "liquibase-process,."
+  LIQUIBASE_SEARCH_PATH: "."
 
   # Store the Liquibase Pro License key in a Github Action Repository Secret. The
   # same license key is used for all executions, so it is tracked at the repository level
@@ -104,25 +104,24 @@ jobs:
           fi
 
   ###################################################################
-  #  Check out the source code and configuration
+  #  Check out the source code
   ####################################################################
   checkout-repo:
     name: Check out repositories
     needs: [init]
-
     runs-on: [self-hosted]
 
     steps:
-      # Check out the source code to .
-      - name: Checkout Database Source repo
+      # Check out the database change configuration code and workflows
+      - name: Checkout Database Change Configuration repo
         uses: actions/checkout@v3
 
-      # Check out the Liquibase Configuration Repo to a folder, "liquibase-process"
-      - name: Checkout Liquibase Configuration repo
+      # Check out the SQL Repo to a folder, "liquibase-sql"
+      - name: Checkout Database Change SQL repo
         uses: actions/checkout@v4
         with:
-          repository: adeelmalik78/Automations
-          path: liquibase-process
+          repository: liquibase/cs-impl-guide-examples-sql
+          path: liquibase-sql
 
   #########################################################################
   #  Roll back
