@@ -12,3 +12,4 @@ variables:
   # BuildId is used in the pipeline run name, labels, and artifact creation/upload steps
   App.Version: $(Build.BuildId)
 
+
