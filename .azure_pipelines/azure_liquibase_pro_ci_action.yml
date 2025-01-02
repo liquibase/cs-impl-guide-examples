@@ -96,7 +96,7 @@ stages:
               LIQUIBASE_COMMAND_USERNAME: $(liquibase-command-username-dev)
               LIQUIBASE_COMMAND_PASSWORD: $(liquibase-command-password-dev)
               LIQUIBASE_DEFAULTS_FILE: ./cs-impl-guide-examples/liquibase.properties
-              LIQUIBASE_SEARCH_PATH: "cs-impl-guide-examples,Automations,."
+              LIQUIBASE_SEARCH_PATH: "cs-impl-guide-examples,cs-impl-guide-examples-sql,."
 
           - script: |
               pwd
@@ -113,7 +113,7 @@ stages:
               LIQUIBASE_COMMAND_USERNAME: $(liquibase-command-username-qa)
               LIQUIBASE_COMMAND_PASSWORD: $(liquibase-command-password-qa)
               LIQUIBASE_DEFAULTS_FILE: ./cs-impl-guide-examples/liquibase.properties
-              LIQUIBASE_SEARCH_PATH: "cs-impl-guide-examples,Automations,."
+              LIQUIBASE_SEARCH_PATH: "cs-impl-guide-examples,cs-impl-guide-examples-sql,."
 
           - script: |
               pwd
@@ -130,5 +130,5 @@ stages:
               LIQUIBASE_COMMAND_USERNAME: $(liquibase-command-username-prod)
               LIQUIBASE_COMMAND_PASSWORD: $(liquibase-command-password-prod)
               LIQUIBASE_DEFAULTS_FILE: ./cs-impl-guide-examples/liquibase.properties
-              LIQUIBASE_SEARCH_PATH: "cs-impl-guide-examples,Automations,."
+              LIQUIBASE_SEARCH_PATH: "cs-impl-guide-examples,cs-impl-guide-examples-sql,."
 
