@@ -27,12 +27,12 @@ pool:
 resources:
   repositories:
 
-    # Repository for the Tools Project, which includes flows and policies
-    - repository: TOOLS_REPOSITORY
-      name: $(Git.ConfigRepository)
+    # Repository for the SQL Source Code
+    - repository: SQL_REPOSITORY
+      name: $(Git.SqlRepository)
       type: GitHub
       endpoint: github.com_dreads
-      source: adeelmalik78/Automations
+      source: liquibase/cs-impl-guide-examples-sql
       ref: 'refs/heads/main'
 
 ###################################################################
@@ -68,10 +68,10 @@ stages:
             displayName: Check out self
 
           # Check out the tools repository with flow files and Custom Checks configs
-          - checkout: TOOLS_REPOSITORY
+          - checkout: SQL_REPOSITORY
             persistCredentials: true
             clean: true
-            displayName: Check out Tools Repository
+            displayName: Check out SQL Repository
 
           # Set the environment variable FLOW_FILE to use the "pre-merge"
           # flow consisting mainly of quality checks
