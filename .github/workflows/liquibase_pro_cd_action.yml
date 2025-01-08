@@ -23,6 +23,9 @@ on:
       - 'develop'
     paths-ignore:
       - '.azure_pipelines/**'
+  repository_dispatch:
+    types: [ dispatch-event ]
+
 
 #####################################################################
 #  Set up the environment

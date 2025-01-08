@@ -19,6 +19,8 @@ on:
       - 'develop'
       - 'qa'
       - 'release/**'
+  repository_dispatch:
+    types: [ dispatch-event ]
 
 #####################################################################
 #  Set up the environment
