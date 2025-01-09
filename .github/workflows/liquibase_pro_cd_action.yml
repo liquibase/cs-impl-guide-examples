@@ -148,8 +148,9 @@ jobs:
       # Execute the Flow file.
       - name: Run flow
         run: |
-          liquibase --license-key=${{ secrets.LIQUIBASE_LICENSE_KEY }} flow \
+          liquibase --license-key=${{ secrets.LIQUIBASE_LICENSE_KEY }} \
              --changelog-file=rootchangelog_by_releases_db.yaml \
+             flow \
              --flow-file=${{ env.FLOW_FILE }} \
              --logfile=logs/liquibase.log
 
