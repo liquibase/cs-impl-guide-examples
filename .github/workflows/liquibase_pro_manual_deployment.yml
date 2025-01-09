@@ -35,7 +35,7 @@ env:
   # The Liquibase Search Path controls how Liquibase finds it's configurations.
   # To ensure the correct config gets located first, keep "." at the end of this path.
   # See https://docs.liquibase.com/concepts/changelogs/how-liquibase-finds-files.html
-  LIQUIBASE_SEARCH_PATH: "liquibase-sql,."
+  LIQUIBASE_SEARCH_PATH: "liquibase-sql/sqlcode_by_releases_db,."
 
   # Location of the Custom Policy Checks settings file from the Liquibase Configuration Repo.
   # See https://docs.liquibase.com/liquibase-pro/policy-checks/custom-policy-checks/home.html
@@ -129,6 +129,8 @@ jobs:
       # Execute the Flow file
       - name: Run flow
         run: |
-          liquibase --license-key=${{ env.LIQUIBASE_LICENSE_KEY }} flow \
+          liquibase --license-key=${{ env.LIQUIBASE_LICENSE_KEY }} \
+             --changelog-file=rootchangelog_by_releases_db.yaml \
+             flow \
              --flow-file=${{ env.FLOW_FILE }} \
              --logfile=logs/liquibase.log

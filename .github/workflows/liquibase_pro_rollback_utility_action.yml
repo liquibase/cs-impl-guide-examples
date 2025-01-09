@@ -49,7 +49,7 @@ env:
   # The Liquibase Search Path controls how Liquibase finds it's configurations.
   # To ensure the correct config gets located first, keep "." at the end of this path.
   # See https://docs.liquibase.com/concepts/changelogs/how-liquibase-finds-files.html
-  LIQUIBASE_SEARCH_PATH: "liquibase-sql,."
+  LIQUIBASE_SEARCH_PATH: "liquibase-sql/sqlcode_by_releases_db,."
 
   # Store the Liquibase Pro License key in a Github Action Repository Secret. The
   # same license key is used for all executions, so it is tracked at the repository level
@@ -137,6 +137,8 @@ jobs:
       # Execute the Flow file
       - name: Run flow
         run: |
-          liquibase --license-key=${{ secrets.LIQUIBASE_LICENSE_KEY }} flow \
+          liquibase --license-key=${{ secrets.LIQUIBASE_LICENSE_KEY }} \
+             --changelog-file=rootchangelog_by_releases_db.yaml \
+             flow \
              --flow-file=${{ env.FLOW_FILE }} \
              --logfile=logs/liquibase.log
