@@ -76,7 +76,7 @@ jobs:
     steps:
       # Cancel any previous runs that are not completed for this workflow
       - name: Cancel previous workflow
-        uses: styfle/cancel-workflow-action@0.12.1
+        uses: styfle/cancel-workflow-action@85880fa0301c86cca9da44039ee3bb12d3bedbfa # 0.12.1
         with:
           access_token: ${{ github.token }}
 
@@ -105,11 +105,11 @@ jobs:
     steps:
       # Check out the database change configuration code and workflows
       - name: Checkout Database Change Configuration repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       # Check out the SQL Repo to a folder, "liquibase-sql"
       - name: Checkout Database Change SQL repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           repository: liquibase/cs-impl-guide-examples-sql
           path: liquibase-sql
