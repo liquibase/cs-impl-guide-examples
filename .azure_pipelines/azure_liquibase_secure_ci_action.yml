@@ -1,22 +1,11 @@
 #####################################################################
-#  Azure Pipeline to perform manual deployment of database
-#  changes using Liquibase Pro, Liquibase Pro Flows, and Custom
-#  Policy checks. The environment is configurable.
+#  Azure Pipeline to perform continuous integration (CI) of database
+#  changes using Liquibase Secure, Liquibase Secure Flows, and Custom
+#  Policy checks.
 #####################################################################
-parameters:
-  - name: target_environment
-    displayName: Target Environment
-    type: string
-    default: DEV
-    values:
-      - DEV
-      - QA
-      - PROD
-
 pr: none
-trigger: none
 
-name: Manual Deployment of $(Build.SourceBranchName)
+name: Continuous Integration of $(Build.SourceBranchName)
 
 #####################################################################
 #  Load variables from the template alongside secrets and variables
@@ -38,12 +27,12 @@ pool:
 resources:
   repositories:
 
-    # Repository for the Tools Project, which includes flows and policies
-    - repository: TOOLS_REPOSITORY
-      name: $(Git.ConfigRepository)
+    # Repository for the SQL Source Code
+    - repository: SQL_REPOSITORY
+      name: $(Git.SqlRepository)
       type: GitHub
       endpoint: github.com_dreads
-      source: adeelmalik78/Automations
+      source: liquibase/cs-impl-guide-examples-sql
       ref: 'refs/heads/main'
 
 ###################################################################
@@ -51,8 +40,7 @@ resources:
 # need one.
 ###################################################################
 stages:
-  - stage: CD
-    # Check out the code to the runner workspace directory
+  - stage: CI
     jobs:
       # Clean the workspace of cached data
       - job: cleanWorkspace
@@ -60,82 +48,87 @@ stages:
         workspace:
           clean: all
 
-      # After cleaning workspace run the job shown as "Database
-      # Deployment" in the UI and in Github Branch Protection
-      - job: databaseDeployment
+      # After cleaning workspace run the job shown as "Custom
+      # Policy Checks" in the UI and in Github Branch Protection "Required Checks"
+      - job: customPolicyChecks
         dependsOn: cleanWorkspace
-        displayName: Database Deployment
+        displayName: Custom Policy Checks
         steps:
           # Debugging script to show all available variables
           - script: |
               for var in $(compgen -e); do
                 echo $var ${!var};
               done
+            displayName: Show all variables
 
-          # Check out the code to the runner workspace directory to the cs-impl-guide-examples directory
+          # Check out the code
           - checkout: self
             persistCredentials: true
             clean: true
-            path: cs-impl-guide-examples
+            displayName: Check out self
 
           # Check out the tools repository with flow files and Custom Checks configs
-          - checkout: TOOLS_REPOSITORY
+          - checkout: SQL_REPOSITORY
             persistCredentials: true
             clean: true
+            displayName: Check out SQL Repository
 
-          # Set the environment variable FLOW_FILE to use the "post-merge"
-          # flow which pushes database changes
+          # Set the environment variable FLOW_FILE to use the "pre-merge"
+          # flow consisting mainly of quality checks
           - bash: |
-              echo "##vso[task.setvariable variable=FLOW_FILE;]flowfiles/liquibase-postmerge.flowfile.yaml"
+              echo "##vso[task.setvariable variable=FLOW_FILE;]flowfiles/liquibase-premerge.flowfile.yaml"
 
           # Run Liquibase using LIQUIBASE_COMMAND_URL, LIQUIBASE_COMMAND_USERNAME, and LIQUIBASE_COMMAND_PASSWORD in
           # the environment. Note the "-dev", "-qa", and "-prod" suffixes for those values in the 'env' section.
           - script: |
               pwd
+              du -ah
               liquibase flow \
                  --flow-file=$(FLOW_FILE) \
                  --logfile=logs/liquibase.log
-            displayName: Deploy to DEV
-            # This condition controls whether this step runs. It will trigger when the branch is 'develop'
-            condition: eq( variables['Build.SourceBranchName'], 'develop')
+            displayName: Run Liquibase in DEV
+            # This condition controls whether this step runs. It will trigger when the branch is 'develop' or
+            # starts with 'JIRA-'.
+            condition: or(eq( variables['Build.SourceBranchName'], 'develop'),startsWith( variables['Build.SourceBranchName'], 'JIRA-'))
             env:
-              LIQUIBASE_LICENSE_KEY: $(Liquibase-Pro-Key)
+              LIQUIBASE_LICENSE_KEY: $(Liquibase-Secure-Key)
               LIQUIBASE_COMMAND_URL: $(Liquibase-command-url-dev)
               LIQUIBASE_COMMAND_USERNAME: $(liquibase-command-username-dev)
               LIQUIBASE_COMMAND_PASSWORD: $(liquibase-command-password-dev)
               LIQUIBASE_DEFAULTS_FILE: ./cs-impl-guide-examples/liquibase.properties
-              LIQUIBASE_SEARCH_PATH: "cs-impl-guide-examples,Automations,."
+              LIQUIBASE_SEARCH_PATH: "cs-impl-guide-examples,cs-impl-guide-examples-sql,."
 
           - script: |
               pwd
               liquibase flow \
                  --flow-file=$(FLOW_FILE) \
                  --logfile=logs/liquibase.log
-            displayName: Deploy to QA
+
+            displayName: Run Liquibase in QA
             # This condition controls whether this step runs. It will trigger when the branch is 'qa'
             condition: eq( variables['Build.SourceBranchName'], 'qa')
             env:
-              LIQUIBASE_LICENSE_KEY: $(Liquibase-Pro-Key)
+              LIQUIBASE_LICENSE_KEY: $(Liquibase-Secure-Key)
               LIQUIBASE_COMMAND_URL: $(liquibase-command-url-qa)
               LIQUIBASE_COMMAND_USERNAME: $(liquibase-command-username-qa)
               LIQUIBASE_COMMAND_PASSWORD: $(liquibase-command-password-qa)
               LIQUIBASE_DEFAULTS_FILE: ./cs-impl-guide-examples/liquibase.properties
-              LIQUIBASE_SEARCH_PATH: "cs-impl-guide-examples,Automations,."
+              LIQUIBASE_SEARCH_PATH: "cs-impl-guide-examples,cs-impl-guide-examples-sql,."
 
           - script: |
               pwd
               liquibase flow \
-                --flow-file=$(FLOW_FILE) \
-                --logfile=logs/liquibase.log
+                 --flow-file=$(FLOW_FILE) \
+                 --logfile=logs/liquibase.log
 
-            displayName: Deploy to PROD
+            displayName: Run Liquibase in PROD
             # This condition controls whether this step runs. It will trigger when the branch starts with 'release/'
             condition: startsWith( variables['Build.SourceBranchName'], 'release/')
             env:
-              LIQUIBASE_LICENSE_KEY: $(Liquibase-Pro-Key)
+              LIQUIBASE_LICENSE_KEY: $(Liquibase-Secure-Key)
               LIQUIBASE_COMMAND_URL: $(liquibase-command-url-prod)
               LIQUIBASE_COMMAND_USERNAME: $(liquibase-command-username-prod)
               LIQUIBASE_COMMAND_PASSWORD: $(liquibase-command-password-prod)
               LIQUIBASE_DEFAULTS_FILE: ./cs-impl-guide-examples/liquibase.properties
-              LIQUIBASE_SEARCH_PATH: "cs-impl-guide-examples,Automations,."
+              LIQUIBASE_SEARCH_PATH: "cs-impl-guide-examples,cs-impl-guide-examples-sql,."
 

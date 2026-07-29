@@ -1,6 +1,6 @@
 #####################################################################
 #  Azure Pipeline to perform manual rollback of database
-#  changes using Liquibase Pro, Liquibase Pro Flows, and Custom
+#  changes using Liquibase Secure, Liquibase Secure Flows, and Custom
 #  Policy checks. The environment is configurable.
 #####################################################################
 pr: none
@@ -33,7 +33,7 @@ resources:
       name: $(Git.ConfigRepository)
       type: GitHub
       endpoint: github.com_dreads
-      source: adeelmalik78/Automations
+      source: liquibase/cs-impl-guide-examples
       ref: 'refs/heads/main'
 
 ###################################################################
@@ -88,7 +88,7 @@ stages:
             # This condition controls whether this step runs. It will trigger when the branch is 'develop'
             condition: eq( variables['Build.SourceBranchName'], 'develop')
             env:
-              LIQUIBASE_LICENSE_KEY: $(Liquibase-Pro-Key)
+              LIQUIBASE_LICENSE_KEY: $(Liquibase-Secure-Key)
               LIQUIBASE_COMMAND_URL: $(Liquibase-command-url-dev)
               LIQUIBASE_COMMAND_USERNAME: $(liquibase-command-username-dev)
               LIQUIBASE_COMMAND_PASSWORD: $(liquibase-command-password-dev)
@@ -104,7 +104,7 @@ stages:
             # This condition controls whether this step runs. It will trigger when the branch is 'qa'
             condition: eq( variables['Build.SourceBranchName'], 'qa')
             env:
-              LIQUIBASE_LICENSE_KEY: $(Liquibase-Pro-Key)
+              LIQUIBASE_LICENSE_KEY: $(Liquibase-Secure-Key)
               LIQUIBASE_COMMAND_URL: $(liquibase-command-url-qa)
               LIQUIBASE_COMMAND_USERNAME: $(liquibase-command-username-qa)
               LIQUIBASE_COMMAND_PASSWORD: $(liquibase-command-password-qa)
@@ -120,7 +120,7 @@ stages:
             # This condition controls whether this step runs. It will trigger when the branch starts with 'release/'
             condition: startsWith( variables['Build.SourceBranchName'], 'release/')
             env:
-              LIQUIBASE_LICENSE_KEY: $(Liquibase-Pro-Key)
+              LIQUIBASE_LICENSE_KEY: $(Liquibase-Secure-Key)
               LIQUIBASE_COMMAND_URL: $(liquibase-command-url-prod)
               LIQUIBASE_COMMAND_USERNAME: $(liquibase-command-username-prod)
               LIQUIBASE_COMMAND_PASSWORD: $(liquibase-command-password-prod)
